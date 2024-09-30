@@ -5,9 +5,42 @@
         <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
         <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-detector.js"></script>
         <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-handler.js"></script>
+        <!-- クリックに対応させるためのライブラリを読み込み -->
+        <script src="https://rawgit.com/nicolocarpignoli/nicolocarpignoli.github.io/master/ar-click-events/events.js"></script>
     </head>
 
+    <style>
+        /* AR画面内にHTMLフレームを埋め込むためのCSS */
+        .ar_frame {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 30%;
+          padding: 5%;
+          justify-content: center;
+          align-items: center;
+          z-index: 10;            
+          background:white;
+          opacity: 0.8;
+        }
+    </style>
+
     <body style="margin: 0; overflow: hidden;">
+
+        <!-- HTMLフレーム -->
+        <div class="ar_frame">
+            <p> 
+                マーカーをクリックするとページに飛ぶようになっている他、<br/>
+                このようにフレームを作ってやれば、<br/>
+                自分の作ったDOM要素をオーバーレイ表示できるので、<br/>
+                例えば<a href="https://yahoo.co.jp">リンク</a>やボタンを作れます。<br/><br/>
+                <button onclick="location.href='https://google.co.jp'"> Go To Google </button> <br/>
+                Figmaでこの部分のインターフェースを入れたりとか<br/>
+                自分でHTMLとCSSを書くとかすれば結構いろいろできると思います。<br/>
+            </p>
+        </div>
+        
         <a-scene
             vr-mode-ui="enabled: false;"
             loading-screen="enabled: false;"
@@ -15,7 +48,7 @@
             id="scene"
             embedded
             gesture-detector
-        >
+            >
             <a-marker
                 id="animated-marker"
                 type="pattern"
@@ -25,16 +58,19 @@
                 emitevents="true"
                 cursor="fuse: false; rayOrigin: mouse;"
                 id="markerA"
+                emitevents="true"
             >
+
+                <!-- 画像をクリックしたときに飛ぶURLをlink属性に追加 -->
                 <a-image
                     src="assets/asset.jpeg"
                     scale="1 1 1"
                     class="clickable"
                     rotation="-90 0 0"
                     gesture-handler
+                    link="href: https://www.tais.ac.jp/" 
                 ></a-image>
             </a-marker>
-
             <a-entity camera></a-entity>
         </a-scene>
     </body>
